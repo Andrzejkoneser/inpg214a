@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int** createMatrix(int n);
+void fillMatrix(int** tab, int n);
+void copyMatrix(int*** pdest, int** src, int n);
+void deleteMatrix(int*** ptab, int n);
+
+int** createMatrix(int n)
+    {
+    int i;
+    int** tab;
+    tab=malloc (n*sizeof(*tab));
+    if (tab==NULL)
+        return NULL;
+    for(i=0; i<n; i++){
+        tab[i]=malloc (n*sizeof(tab));
+        if(tab==NULL){
+            deleteMatrix(&tab, i);
+            return NULL;
+        }
+    }
+
+    return tab;
+    }
+void fillMatrix(int** tab, int n)
+    {
+    int wie, kol;
+    int i=1;
+    for(wie=0; wie<n; wie++)
+        for(kol=0; kol<n; kol++)
+            tab[wie][kol]=i++;
+    }
+void copyMatrix(int*** pdest, int** src, int n)
+    {
+    int wie, kol;
+    *pdest=createMatrix(n);
+    if(*pdest!=NULL)
+        for(wie=0; wie<n; wie++)
+            for(kol=0; kol<n; kol++)
+                (*pdest)[wie][kol]=src[wie][kol];
+    }
+void deleteMatrix(int*** ptab, int n)
+    {
+    int i;
+    for(i=0; i<n; i++)
+        free((*ptab)[i]);
+    free(*ptab);
+    }
+main()
+{
+int **tab1;
+int **tab2;
+int n;
+printf("Wpisz rozmiar tablicy:\n");
+scanf("%d", &n);
+if(n<1)
+    printf("Lepiej bedzie jesli tablica bedzie miala wymiary dodatnie");
+tab1=createMatrix(n);
+if(tab1==NULL)
+    return -1;
+fillMatrix(tab1, n);
+tab2=createMatrix(n);
+if(tab2==NULL)
+    return -1;
+copyMatrix(&tab2, tab1, n);
+deleteMatrix(&tab1, n);
+int wie, kol;
+for(wie=0; wie<n; wie++){
+    for(kol=0; kol<n; kol++){
+        printf(" %3d ", tab2[wie][kol]);
+    }
+    printf("\n");
+}
+deleteMatrix(&tab2, n);
+}
+

@@ -1,0 +1,142 @@
+# include <iostream>
+# include <time.h>
+# include <conio.h>
+
+using namespace std;
+
+
+
+int wyswietl( int tab[ 10 ][ 10 ] )
+{
+    int licznik = 0;
+    for( int i = 0; i < 10; i++ )
+    {
+        cout << endl;
+        for( int j = 0; j < 10; j++ )
+        {
+            if( tab[ i ][ j ] == 1 ) licznik++;
+           
+            cout << tab[ i ][ j ] << "  ";
+        }
+    }
+    cout << endl << endl << "Pozostalo przy zyciu " << licznik << " komorek" << endl;
+    return 0;
+}
+int zmien( int tab[ 10 ][ 10 ] )
+{
+   
+    for( int x = 0; x < 10; x++ )
+    {
+        for( int y = 0; y < 10; y++ )
+        {
+            int ilosc = 0;
+            if( tab[ y ][ y ] == 0 )
+            {
+                if( tab[ x ][ y - 1 ] == 1 ) ilosc++;
+               
+                if( tab[ x - 1 ][ y ] == 1 ) ilosc++;
+               
+                if( tab[ x - 1 ][ y - 1 ] == 1 ) ilosc++;
+               
+                if( tab[ x + 1 ][ y - 1 ] == 1 ) ilosc++;
+               
+                if( tab[ x + 1 ][ y ] == 1 ) ilosc++;
+               
+                if( tab[ x - 1 ][ y + 1 ] == 1 ) ilosc++;
+               
+                if( tab[ x ][ y + 1 ] == 1 ) ilosc++;
+               
+                if( tab[ x + 1 ][ y + 1 ] == 1 ) ilosc++;
+               
+                if( ilosc == 3 )
+                {
+                    tab[ x ][ y ] = 1;
+                }
+            }
+            if( tab[ x ][ y ] == 1 ) {
+               
+                if( tab[ x ][ y - 1 ] == 1 ) ilosc++;
+               
+                if( tab[ x - 1 ][ y ] == 1 ) ilosc++;
+               
+                if( tab[ x - 1 ][ y - 1 ] == 1 ) ilosc++;
+               
+                if( tab[ x + 1 ][ y - 1 ] == 1 ) ilosc++;
+               
+                if( tab[ x + 1 ][ y ] == 1 ) ilosc++;
+               
+                if( tab[ x - 1 ][ y + 1 ] == 1 ) ilosc++;
+               
+                if( tab[ x ][ y + 1 ] == 1 ) ilosc++;
+               
+                if( tab[ x + 1 ][ y + 1 ] == 1 ) ilosc++;
+               
+                if( ilosc == 2 || ilosc == 3 )
+                {
+                    tab[ x ][ y ] = 1;
+                }
+                if( ilosc < 2 )
+                {
+                    tab[ x ][ y ] = 0;
+                }
+                if( ilosc >= 4 )
+                {
+                    tab[ x ][ y ] = 0;
+                }
+            }
+        }
+    }
+    cout << endl;
+    wyswietl( tab );
+    return 0;
+}
+int generuj()
+{
+    for( int i = 0; i <= 10; i++ )
+    {
+        char a;
+        int tab[ 10 ][ 10 ], licznik = 0;
+        srand( time( 0 ) );
+       
+       
+        for( int i = 0; i < 10; i++ )
+        {
+            cout << endl;
+            for( int j = 0; j < 10; j++ )
+            {
+                tab[ i ][ j ] = rand() % 2;
+                if( tab[ i ][ j ] == 1 ) licznik++;
+               
+                cout << tab[ i ][ j ] << "  " << endl;
+               
+               
+            }
+        }
+        cout << endl << endl << "Zywych komorek: " << licznik << endl;
+       
+       
+       
+        cout << "Czy chesz zobaczyc kolejna faze zycia ?(T/N) : ";
+        cin >> a;
+        if( a == 't' || a == 'T' )
+        {
+            system( "cls" );
+            zmien( tab );
+            getch();
+        }
+       
+    }
+    return 0;
+   
+   
+   
+}
+
+int main()
+{
+    char a;
+    generuj();
+    cout << endl;
+   
+   
+}

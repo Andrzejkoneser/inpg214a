@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <math.h>
+
+struct zesp {
+    double re;
+    double im;
+} z;
+
+struct zesp dodawanie (struct zesp z1, struct zesp z2){
+    struct zesp z3;
+    z3.re = z1.re+z2.re;
+    z3.im = z1.im+z2.im;
+    return z3;
+}
+double modul (struct zesp z){
+    double mod;
+    mod=sqrt((z.re*z.re)+(z.im*z.im));
+    return mod;
+}
+struct zesp sprzezenie (struct zesp z){
+    struct zesp z1;
+    z1.re=z.re;
+    z1.im=-z.im;
+    return z1;
+}
+void wypisz_zesp(struct zesp z) {
+printf("%.2lf %+.2lfi \n", z.re, z.im);
+}
+
+main ()
+{
+struct zesp z1;
+    z1.re;
+    z1.im;
+printf("Wpisz czesc rzeczywista pierwszej liczby \n");
+scanf("%lf", &z1.re);
+printf("Wpisz czesc urojona pierwszej liczby \n");
+scanf("%lf", &z1.im);
+struct zesp z2;
+    z2.re;
+    z2.im;
+printf("Wpisz czesc rzeczywista drugiej liczby \n");
+scanf("%lf", &z2.re);
+printf("Wpisz czesc urojona drugiej liczby \n");
+scanf("%lf", &z2.im);
+struct zesp z3;
+struct zesp z4;
+struct zesp z5;
+printf("Liczby zespolone, na ktorych wykonujemy dzialania to:\n");
+wypisz_zesp(z1);
+printf ("oraz\n");
+wypisz_zesp(z2);
+printf("Wynik dodawania tych liczb to:\n");
+z3=dodawanie(z1,z2);
+wypisz_zesp(z3);
+printf("Moduly tych liczb to:\n %5lf  oraz   %5lf\n", modul(z1), modul(z2));
+double x, y;
+printf("Sprzezenie tych liczb wynosi odpowiednio:\n");
+z4=sprzezenie(z1);
+z5=sprzezenie(z2);
+wypisz_zesp(z4);
+wypisz_zesp(z5);
+}

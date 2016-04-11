@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <string.h>
+#define ROZMIAR 128
+int palindrom (char* napis, int liczba)
+    {
+    if (liczba==0 || liczba==1)
+    return 1;
+    if (*napis == *(napis+liczba-1))
+        palindrom(napis+1, liczba-2);
+    else return 0;
+    }
+int main()
+{
+char napis[ROZMIAR];
+printf("Podaj ciag liter, by sprawdzic, czy jest palindromem\n");
+fgets(napis, ROZMIAR, stdin);
+int liczba = strlen(napis)-1;
+if (palindrom(napis, liczba) == 0)
+    printf("Wpisany ciag liter nie jest palindromem\n");
+else
+    printf("Wpisany ciag liter jest palindromem\n");
+}

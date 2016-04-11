@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <math.h>
+int kwadratowa(float a, float b, float c, float *x, float *y)
+    {
+        float delta;
+        delta=b*b-4*a*c;
+        *x=(-b-sqrt(delta))/(2*a);
+        *y=(-b+sqrt(delta))/(2*a);
+        if (delta<0)
+            return 0;
+        else if(delta==0)
+            return 1;
+        else
+            return 2;
+    }
+main()
+{
+    float a, b, c, x, y;
+    printf("Podaj wspolczynniki rownania kwadratowego ax^2+bx+c=0 \n");
+    printf("a= \n");
+    scanf("%f", &a);
+    printf("b= \n");
+    scanf("%f", &b);
+    printf("c= \n");
+    scanf("%f", &c);
+    int rozw=kwadratowa(a,b,c,&x,&y);
+    if (rozw==2)
+        printf("Rownanie ma dwa rozwiazania rzeczywiste: %f, %f", x, y);
+    else if(rozw==1)
+        printf("Rownanie ma jedno rozwiazanie rzeczywiste: %f", x);
+    else
+        printf("Rownanie nie ma rozwiazan rzeczywistych");
+}

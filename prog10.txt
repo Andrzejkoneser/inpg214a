@@ -1,0 +1,140 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define ROZMIAR 30
+struct osoba{
+    char imie[ROZMIAR];
+    char nazwisko[ROZMIAR];
+    int rokur;
+    };
+struct el{
+    struct osoba dane;
+    struct el *nast;
+    };
+
+void wypisz (struct el *head){
+    if (head==NULL) return 0;
+    struct el *wsk;
+    for(wsk=head;wsk!=NULL;wsk=wsk->nast)
+        printf("%10s | %10s | %d \n", wsk->dane.imie, wsk->dane.nazwisko, wsk->dane.rokur);
+    }
+
+int nowy (struct el **head){
+    struct el *element = malloc(sizeof(struct el));
+    if(element==NULL)
+        return 0;
+    printf("\nPodaj imie: ");
+    scanf("%s",&element->dane.imie);
+    printf("\nPodaj nazwisko: ");
+    scanf("%s",&element->dane.nazwisko);
+    printf("\nPodaj rok urodzenia: ");
+    scanf("%d",&element->dane.rokur);
+    element->nast=*head;
+    *head=element;
+    return 1;
+    }
+struct el *usun (struct el *head){
+    if(head==NULL) return 0;
+    struct lista *p;
+    p=head;
+    head=head->nast;
+    free(p);
+    return head;
+    }
+int dodajtu (struct el *szukany){
+    struct el *element=malloc(sizeof(struct el));
+    if (element==NULL) return 0;
+    printf("\nPodaj imie: ");
+    scanf("%s",&element->dane.imie);
+    printf("\nPodaj nazwisko: ");
+    scanf("%s",&element->dane.nazwisko);
+    printf("\nPodaj rok urodzenia: ");
+    scanf("%d",&element->dane.rokur);
+    element->nast=szukany->nast;
+    szukany->nast=element;
+    return 1;
+    }
+void usuntoo (struct el *head){
+    struct el *i;
+    struct el *j;
+    for (i=head; i!=NULL; i=i->nast)
+        j=i;
+        free(j);
+    }
+struct el *wyszukajrok (int ur, struct el *head){
+    struct el *i;
+    for (i=head; i!=NULL; i=i->nast)
+        if (i->dane.rokur==ur) return i;
+    return -1;
+    }
+struct el *wyszukajnazw (char nazw[ROZMIAR], struct el *head){
+    struct el *i;
+    int k;
+    for (i=head; i!=NULL; i=i->nast)
+        for(k=0; k<ROZMIAR; k++)
+            if (nazw[k]=nazw[ROZMIAR-k])
+                return 1;
+            else return 0;
+    return -1;
+    }
+main (){
+    struct el *head = NULL;
+    struct el *szukany;
+    int x, cyfra, ur;
+    char nazw[ROZMIAR];
+    while(1){
+        printf("Jesli chcesz dodac osobe na poczatku listy wpisz 1 i wcisnij enter\n");
+        printf("Jesli chcesz wyszukac osobe wedlug roku urodzenia wpisz 2 i wcisnij enter\n");
+        printf("Jesli chcesz wyszukac osobe wedlug nazwiska wpisz 3 i wcisnij enter\n");
+        printf("Jesli chcesz dodac osobe za wyszukana (wg roku urodzenia) wpisz 4 i wcisnij enter\n");
+        printf("Jesli chcesz dodac osobe za wyszukana (wg nazwiska) wpisz 5 i wcisnij enter\n");
+        printf("Jesli chcesz usunac dane pierwszej osoby z listy wspisz 6 i wcisnij enter\n");
+        printf("Jesli chcesz usunac cala liste, wpisz 7 i wcisnij enter\n");
+        scanf("%d", &cyfra);
+        switch(cyfra)
+        {
+        case 1:
+            x=nowy(&head);
+            printf("\n");
+            if(x!=0) wypisz(head);
+            printf("\n");
+            break;
+        case 2:
+            printf("Podaj rok urodzenia osoby, ktora chcesz wyszukac\n");
+            scanf("%d", &ur);
+            szukany=wyszukajrok(ur, head);
+            printf("Wyszukano osobe: \n%s %s %d\n", szukany->dane.imie, szukany->dane.nazwisko, szukany->dane.rokur);
+            break;
+        case 3:
+            printf("Podaj nazwisko osoby, ktora chcesz wyszukac\n");
+            fgets(nazw, ROZMIAR, stdin);
+            szukany=wyszukajnazw(nazw[ROZMIAR], head);
+            printf ("Wyszukano osobe: \n%s %s %d\n", szukany->dane.imie, szukany->dane.nazwisko, szukany->dane.rokur);
+            break;
+        case 4:
+            printf("Podaj rok urodzenia osoby, ktora chcesz wyszukac, by po niej wpisac nowa osobe\n");
+            scanf("%d", &ur);
+            szukany=wyszukajrok(ur, head);
+            x=dodajtu(szukany);
+            if(x!=0) wypisz(head);
+            printf("\n");
+            break;
+        case 5:
+            printf("Podaj nazwisko osoby, ktora chcesz wyszukac, by po niej wpisac nowa osobe\n");
+            fgets(nazw, ROZMIAR, stdin);
+            szukany=wyszukajnazw(nazw[ROZMIAR], head);
+            x=dodajtu(szukany);
+            if(x!=0) wypisz(head);
+            printf("\n");
+            break;
+        case 6:
+            head=usun(head);
+            wypisz (head);
+            break;
+        case 7:
+            usuntoo(head);
+            break;
+        }
+    }
+    return;
+    }
+

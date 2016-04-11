@@ -1,0 +1,19 @@
+#include <stdio.h>
+int newton (int n, int k)
+    {
+    if (k<0 || n<0 || k>n) return 0;
+    if (k==0 || k==n) return 1;
+    else return newton(n-1, k-1)+newton(n-1, k);
+    }
+int main ()
+{
+int liczba1, liczba2;
+printf("Podaj liczbe n symbolu Newtona \n");
+scanf("%d", &liczba1);
+printf("Podaj liczbe k symbolu Newtona \n");
+scanf("%d", &liczba2);
+if (newton(liczba1, liczba2)==0)
+    printf("Symbol Newtona nie istnieje\n");
+else
+    printf("Wartosc symbolu Newtona wynosi %d\n", newton(liczba1, liczba2));
+}
